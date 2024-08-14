@@ -98,7 +98,12 @@ precioPorTareaPedida(Cliente, Tarea, Precio):-
     precio(Tarea, PrecioPorMetroCuadrado),
     Precio is PrecioPorMetroCuadrado * CantidadDeMetrosCuadrados.
 
-% 5) necesitamos saber quiénes aceptarían el pedido de un cliente. Un integrante acepta el pedido cuando puede realizar todas las tareas del pedido y además está dispuesto a aceptarlo.
+precioACobrarV2(Cliente, PrecioACobrar) :-
+    tareaPedida(_, Cliente, _),
+    findall(Precio, precioPorTareaPedida(Cliente, _, Precio), Precios),     % puedo poner un guion bajo "_" en Tarea
+    sum_list(Precios, PrecioACobrar).
+
+% 5) Necesitamos saber quiénes aceptarían el pedido de un cliente. Un integrante acepta el pedido cuando puede realizar todas las tareas del pedido y además está dispuesto a aceptarlo.
 % Sabemos que Ray sólo acepta pedidos que no incluyan limpiar techos, Winston sólo acepta pedidos que paguen más de $500, Egon está dispuesto a aceptar pedidos que no tengan tareas complejas y Peter está dispuesto a aceptar cualquier pedido.
 % Decimos que una tarea es compleja si requiere más de dos herramientas. Además la limpieza de techos siempre es compleja
 
